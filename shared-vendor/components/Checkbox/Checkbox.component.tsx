@@ -21,7 +21,7 @@ export const Checkbox = ({ value, label, disabled, strikeLabel, onValueChange }:
         <CheckTick state={state} />
       </div>
 
-      {label && <span className={`${hasStrike ? "line-through" : ""}`}>{label}</span>}
+      {label && <span className={`${hasStrike ? "line-through" : ""} break-all`}>{label}</span>}
     </div>
   );
 };
