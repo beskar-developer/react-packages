@@ -1,0 +1,27 @@
+import type { Props, State } from "./Checkbox.type";
+
+const BUTTON_CLASSES: Record<State, string> = {
+  CHECKED: "border-indigo-500 bg-indigo-500",
+  UNCHECKED: "border-gray-400 bg-transparent",
+};
+
+export const Checkbox = ({ value, label, disabled, strikeLabel, onValueChange }: Props) => {
+  const { state, toggleValue, hasStrike } = useCheckBox({
+    value,
+    disabled,
+    strikeLabel,
+    onValueChange,
+  });
+
+  return (
+    <div className="flex items-center justify-center gap-1" onClick={toggleValue}>
+      <div
+        className={`${BUTTON_CLASSES[state]} ${disabled ? "cursor-not-allowed opacity-55 grayscale-50" : ""} m-4 flex size-4.5 shrink-0 items-center justify-center rounded-sm border-2 text-white`}
+      >
+        <CheckTick state={state} />
+      </div>
+
+      {label && <span className={`${hasStrike ? "line-through" : ""}`}>{label}</span>}
+    </div>
+  );
+};
