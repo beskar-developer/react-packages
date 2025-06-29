@@ -8,8 +8,6 @@ export const useBaseButton = ({
   onClick,
 }: Pick<Props, "disabled" | "loading" | "onClick">) => {
   const wrapOnClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
     if (disabled || loading) return;
 
     onClick?.(event);
