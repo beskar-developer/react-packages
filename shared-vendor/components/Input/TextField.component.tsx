@@ -7,6 +7,8 @@ interface Props extends ComponentProps<"input"> {
   messageFallback?: ReactNode;
 }
 
+const ANIMATION_CONFIG = { opacity: 0, scale: 0, transformOrigin: "right" };
+
 export const TextField = forwardRef<HTMLInputElement, Props>(
   ({ name, label, labelFallback, hint, errorMessage, messageFallback, disabled, ...props }: Props, ref) => {
     const message = errorMessage || hint;
@@ -22,11 +24,18 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
           <input {...props} className="size-full" ref={ref} id={name} name={name} disabled={disabled} />
         </div>
 
-        {messageElement && (
-          <span className={`text-xs ${errorMessage ? "text-red-500 dark:text-red-300" : "text-indigo-500"}`}>
-            {messageElement}
-          </span>
-        )}
+        <AnimatePresence>
+          {messageElement && (
+            <motion.span
+              initial={ANIMATION_CONFIG}
+              exit={ANIMATION_CONFIG}
+              animate={{ opacity: 1, scale: 1 }}
+              className={`text-xs ${errorMessage ? "text-red-500 dark:text-red-300" : "text-indigo-500"}`}
+            >
+              {messageElement}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
     );
   },
