@@ -30,7 +30,7 @@ export const TextField = ({
       </label>
 
       <div className="rounded-md bg-indigo-50 p-2 text-base dark:bg-gray-700 dark:text-indigo-50">
-        <input {...props} className="size-full" ref={ref} id={name} name={name} disabled={disabled} />
+        <input className="size-full" ref={ref} id={name} name={name} disabled={disabled} {...props} />
       </div>
 
       <AnimatePresence>

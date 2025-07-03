@@ -1,5 +1,5 @@
 export const Loading = ({ className, ...props }: ComponentProps<"svg">) => (
-  <svg {...props} className={`${className ?? ""} size-5 animate-spin`} viewBox="0 0 24 24">
+  <svg className={twMerge("size-5 animate-spin", className)} viewBox="0 0 24 24" {...props}>
     <circle className="opacity-25" fill="none" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
 
     <path

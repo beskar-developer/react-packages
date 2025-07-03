@@ -22,7 +22,7 @@ export const ImageLoader = ({
   const imageDisplayClassName = isActiveState("LOADING") ? "hidden" : "inline";
 
   return (
-    <div {...props} className={`${className ?? ""} flex items-center justify-center overflow-hidden`}>
+    <div className={twMerge("flex items-center justify-center overflow-hidden", className)} {...props}>
       {isActiveState("LOADING") && <Loading className="size-8 text-indigo-600" />}
       {isActiveState("ERROR") &&
         (fallback || <p className="text-indigo-600 dark:text-indigo-300">{errorMessage}</p>)}
