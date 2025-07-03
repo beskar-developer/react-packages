@@ -19,7 +19,7 @@ export const ThemeModeProvider = ({ children }: FragmentProps) => {
   const isDark = mode === "DARK";
   const isLight = !isDark;
 
-  const toggleMode = useCallback(() => setMode(isDark ? "LIGHT" : "DARK"), [isDark, setMode]);
+  const toggleMode = () => setMode(isDark ? "LIGHT" : "DARK");
 
   useLayoutEffect(() => {
     if (!isDark) {
@@ -31,10 +31,7 @@ export const ThemeModeProvider = ({ children }: FragmentProps) => {
     addDarkClass();
   }, [isDark]);
 
-  const value = useMemo(
-    () => ({ mode, isDark, isLight, toggleMode, setMode }),
-    [mode, isDark, isLight, setMode, toggleMode],
-  );
+  const value = { mode, isDark, isLight, toggleMode, setMode };
 
   return <ThemeModeContext.Provider value={value}>{children}</ThemeModeContext.Provider>;
 };
