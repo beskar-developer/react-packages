@@ -1,13 +1,17 @@
 import { localStorage } from "@shared-vendor/services";
 
-const toValue = (value: unknown) => {
-  if (typeof value === "function") return value();
+type Value<T> = T | (() => T);
+
+const isFunction = <T>(value: Value<T>): value is () => T => typeof value === "function";
+
+const toValue = <T>(value: Value<T>) => {
+  if (isFunction(value)) return value();
 
   return value;
 };
 
 export const usePersistState = <T>(
-  initialState: T | (() => T),
+  initialState: Value<T>,
   key: string,
   storage = localStorage,
 ): [T, React.Dispatch<React.SetStateAction<T>>] => {
