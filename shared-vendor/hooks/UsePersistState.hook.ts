@@ -19,7 +19,7 @@ export const usePersistState = <T>(
 
   useEffect(() => {
     storage.setItem(key, value);
-  }, [storage, value, key]);
+  }, [value]);
 
   return [value, setValue];
 };

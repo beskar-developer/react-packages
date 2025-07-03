@@ -21,7 +21,7 @@ export const useCounter = ({ min, max, count, onCountChange }: Props) => {
   useEffect(() => {
     if (isLesserThanMin) onCountChange(min);
     if (isBiggerThanMax) onCountChange(max);
-  }, [isBiggerThanMax, isLesserThanMin, max, min, onCountChange, count]);
+  }, [isBiggerThanMax, isLesserThanMin]);
 
   return { isBiggerThanMax, isLesserThanMin, increment, decrement };
 };

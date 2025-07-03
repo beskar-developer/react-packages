@@ -4,9 +4,10 @@ type Key = string | Array<string>;
 
 export const useSearch = <T>(items: Array<T>, key: Key = "name", uniqueKey: string = "id") => {
   const [searchedValue, setSearchedValue] = useState("");
+  const debounceValue = useDebounce(searchedValue);
 
   const getSearchedItems = (key: string) =>
-    items.filter((item) => (String(getValueByPath(item, key)) || "").includes(searchedValue));
+    items.filter((item) => (String(getValueByPath(item, key)) || "").includes(debounceValue));
 
   const getUniqueSearchedItems = () => {
     const searchedItems = (key as Array<string>).reduce(
