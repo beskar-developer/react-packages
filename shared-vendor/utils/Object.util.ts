@@ -17,7 +17,7 @@ export const navigateObject = (object: Record<string, any>, path: string): [any,
   return [refHolder, key];
 };
 
-export const getValueByPath = (object: Record<string, any>, path: string) => {
+export const getValueByPath = <T extends object>(object: T, path: string) => {
   const [reference, key] = navigateObject(object, path);
 
   return reference[key];

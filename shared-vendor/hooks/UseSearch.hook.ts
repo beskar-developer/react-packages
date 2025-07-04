@@ -15,7 +15,7 @@ export const useSearch = <T extends object>(items: Array<T>, key: Key = "name", 
       [],
     );
 
-    const searchedSet = new Set(searchedItems, (item: T) => getValueByPath(item, uniqueKey));
+    const searchedSet = new Set(searchedItems, (item) => getValueByPath(item as object, uniqueKey));
 
     return searchedSet.toArray();
   };

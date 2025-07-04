@@ -1,35 +1,38 @@
-const DEFAULT_TAKE = (item) => item;
+type Take = <T>(item: T) => T | string;
+type Callback = <T>(item?: T, itemCopy?: T, set?: InstanceType<typeof Set<T>>) => void;
+
+const DEFAULT_TAKE: Take = (item) => item;
 const SET_STRING = "[object Set]";
 
-export default class Set {
+export default class Set<T> {
   map = new Map();
   take;
 
-  constructor(iterator, take) {
+  constructor(iterable: Iterable<T>, take: Take) {
     this.take = take || DEFAULT_TAKE;
 
-    if (!iterator) return;
+    if (!iterable) return;
 
-    for (const item of iterator) {
+    for (const item of iterable) {
       const uniqueKey = this.take(item);
       this.map.set(uniqueKey, item);
     }
   }
 
-  has(item) {
+  has(item: T) {
     const uniqueKey = this.take(item);
 
     return this.map.has(uniqueKey);
   }
 
-  add(item) {
+  add(item: T) {
     const uniqueKey = this.take(item);
     this.map.set(uniqueKey, item);
 
     return this;
   }
 
-  toggle(item) {
+  toggle(item: T) {
     if (this.has(item)) {
       this.delete(item);
     } else {
@@ -41,7 +44,7 @@ export default class Set {
     this.map.clear();
   }
 
-  delete(item) {
+  delete(item: T) {
     const uniqueKey = this.take(item);
 
     return this.map.delete(uniqueKey);
@@ -69,7 +72,7 @@ export default class Set {
   [Symbol.iterator]() {
     const mapIterator = this.map.values();
 
-    const entriesIterator = {
+    const entriesIterator: Iterator<T> = {
       next() {
         const iterator = mapIterator.next();
 
@@ -88,28 +91,28 @@ export default class Set {
     return this[Symbol.iterator]();
   }
 
-  foreach(callback) {
-    for (const item of this) {
-      callback.apply(this, [item, item, this]);
-    }
+  foreach(callback: Callback) {
+    for (const item of this) callback.apply(this, [item, item, this]);
   }
 
   get size() {
     return this.map.size;
   }
 
-  difference(other) {
-    const differenceSet = new Set([], this.take);
-    const otherSet = new Set(other, this.take);
+  difference(other: InstanceType<typeof Set<T>>) {
+    const differenceSet = new Set<T>([], this.take);
+    const otherSet = new Set<T>(other, this.take);
 
     for (const item of this) {
-      if (!otherSet.has(item)) differenceSet.add(item);
+      if (otherSet.has(item)) continue;
+
+      differenceSet.add(item);
     }
 
     return differenceSet;
   }
 
-  #getSetsBySize(other) {
+  #getSetsBySize(other: InstanceType<typeof Set<T>>) {
     const smallerSetName = other.size < this.size ? "other" : "this";
 
     const otherSet = new Set(other, this.take);
@@ -120,10 +123,10 @@ export default class Set {
     };
   }
 
-  intersection(other) {
+  intersection(other: InstanceType<typeof Set<T>>) {
     const sets = this.#getSetsBySize(other);
 
-    const intersectionSet = new Set([], this.take);
+    const intersectionSet = new Set<T>([], this.take);
 
     for (const item of sets.smaller) {
       if (sets.bigger.has(item)) {
@@ -134,7 +137,7 @@ export default class Set {
     return intersectionSet;
   }
 
-  isDisjointFrom(other) {
+  isDisjointFrom(other: InstanceType<typeof Set<T>>) {
     const sets = this.#getSetsBySize(other);
 
     const isDisjoint = !Array.from(sets.smaller).some((item) => sets.bigger.has(item));
@@ -142,7 +145,7 @@ export default class Set {
     return isDisjoint;
   }
 
-  isSubsetOf(other) {
+  isSubsetOf(other: InstanceType<typeof Set<T>>) {
     const otherSet = new Set(other, this.take);
 
     const isSubset = !Array.from(this).some((item) => !otherSet.has(item));
@@ -150,7 +153,7 @@ export default class Set {
     return isSubset;
   }
 
-  isSupersetOf(other) {
+  isSupersetOf(other: InstanceType<typeof Set<T>>) {
     const otherSet = new Set(other, this.take);
 
     const isSuperset = !Array.from(otherSet).some((item) => !this.has(item));
@@ -158,14 +161,14 @@ export default class Set {
     return isSuperset;
   }
 
-  union(other) {
+  union(other: InstanceType<typeof Set<T>>) {
     const unionArray = Array.from([...this, ...other]);
     const unionSet = new Set(unionArray, this.take);
 
     return unionSet;
   }
 
-  symmetricDifference(other) {
+  symmetricDifference(other: InstanceType<typeof Set<T>>) {
     const otherSet = new Set(other, this.take);
 
     return otherSet.difference(this).union(this.difference(otherSet));
