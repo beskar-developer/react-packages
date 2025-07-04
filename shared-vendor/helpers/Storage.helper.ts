@@ -1,5 +1,7 @@
 import type { StorageOptions } from "@shared-vendor/types";
 
+import { storageOptionsSchema } from "@shared-vendor/schemas";
+
 import { storage as storageMapper } from "@shared-vendor/mappers";
 
 class StorageFactory implements Storage {
@@ -16,8 +18,10 @@ class StorageFactory implements Storage {
     return value;
   }
 
-  setItem(key: string, value: unknown, options: StorageOptions = {}) {
-    const { secure = true, ttl = 0 } = options;
+  setItem(key: string, value: unknown, options?: StorageOptions) {
+    const parsedOptions = storageOptionsSchema.parse(options);
+
+    const { secure = true, ttl = 0 } = parsedOptions;
     const data = storageMapper.toSetData(value, { secure, ttl });
 
     this.#storage.setItem(key, data);
