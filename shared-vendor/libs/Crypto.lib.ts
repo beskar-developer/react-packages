@@ -9,7 +9,7 @@ class Crypto {
     return CryptoJS.AES.encrypt(data, secretKey).toString();
   }
 
-  static decrypt(payload: unknown) {
+  static decrypt(payload: string) {
     if (!payload) return null;
 
     const bytes = CryptoJS.AES.decrypt(payload, secretKey);
