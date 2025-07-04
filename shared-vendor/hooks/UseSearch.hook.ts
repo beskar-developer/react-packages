@@ -2,7 +2,7 @@ import { Set } from "@shared-vendor/helpers";
 
 type Key = string | Array<string>;
 
-export const useSearch = <T>(items: Array<T>, key: Key = "name", uniqueKey: string = "id") => {
+export const useSearch = <T extends object>(items: Array<T>, key: Key = "name", uniqueKey: string = "id") => {
   const [searchedValue, setSearchedValue] = useState("");
   const debounceValue = useDebounce(searchedValue);
 

@@ -1,20 +1,28 @@
 import { localStorage as localStorageClient } from "@shared-vendor/clients";
 
-class LocalStorage {
-  setItem(key, value) {
+class LocalStorage implements Storage {
+  setItem(key: string, value: string) {
     localStorageClient.setItem(key, value);
   }
 
-  getItem(key) {
+  getItem(key: string) {
     return localStorageClient.getItem(key);
   }
 
-  removeItem(key) {
+  removeItem(key: string) {
     localStorageClient.removeItem(key);
   }
 
   clear() {
     localStorageClient.clear();
+  }
+
+  get length() {
+    return localStorageClient.length;
+  }
+
+  key(index: number) {
+    return localStorageClient.key(index);
   }
 }
 

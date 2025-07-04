@@ -1,41 +1,43 @@
-import { storage as storageMapper } from "@shared-vendor/mappers";
-import { storageKeySchema as keySchema, storageOptionsSchema as optionsSchema } from "@shared-vendor/schemas";
+import type { StorageOptions } from "@shared-vendor/types";
 
-class Storage {
+import { storage as storageMapper } from "@shared-vendor/mappers";
+
+class StorageFactory implements Storage {
   #storage;
-  constructor(storage) {
+  constructor(storage: Storage) {
     this.#storage = storage;
   }
 
-  getItem(key) {
-    keySchema.validateSync(key);
-
-    const data = this.#storage.getItem(key);
+  getItem(key: string) {
+    const data = this.#storage.getItem(key) ?? "{}";
     const value = storageMapper.toGetData(data);
     if (!value) this.#storage.removeItem(key);
 
     return value;
   }
 
-  setItem(key, value, options = {}) {
-    keySchema.validateSync(key);
-    optionsSchema.validateSync(options);
-
+  setItem(key: string, value: unknown, options: StorageOptions = {}) {
     const { secure = true, ttl = 0 } = options;
     const data = storageMapper.toSetData(value, { secure, ttl });
 
     this.#storage.setItem(key, data);
   }
 
-  removeItem(key) {
-    keySchema.validateSync(key);
-
+  removeItem(key: string) {
     this.#storage.removeItem(key);
   }
 
   clear() {
     this.#storage.clear();
   }
+
+  get length() {
+    return this.#storage.length;
+  }
+
+  key(index: number) {
+    return this.#storage.key(index);
+  }
 }
 
-export default Storage;
+export default StorageFactory;

@@ -1,2 +1,2 @@
-export { default as MEDIA_QUERY } from "./media-query.constant";
-export * from "./error-message.constant";
+export { default as MEDIA_QUERY } from "./MediaQuery.constant";
+export * from "./ErrorMessage.constant";

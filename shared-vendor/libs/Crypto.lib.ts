@@ -2,20 +2,20 @@ import CryptoJS from "crypto-js";
 
 const secretKey = getEnv("CRYPTO_SECRET_KEY");
 
-const crypto = {
-  encrypt(payload) {
+class Crypto {
+  static encrypt(payload: unknown) {
     const data = JSON.stringify(payload);
 
     return CryptoJS.AES.encrypt(data, secretKey).toString();
-  },
+  }
 
-  decrypt(payload) {
+  static decrypt(payload: unknown) {
     if (!payload) return null;
 
     const bytes = CryptoJS.AES.decrypt(payload, secretKey);
 
     return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  },
-};
+  }
+}
 
-export default crypto;
+export default Crypto;

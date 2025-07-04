@@ -1,11 +1,11 @@
-export const isString = (value) =>
+export const isString = (value: unknown) =>
   typeof value === "string" ||
   value instanceof String ||
   Object.prototype.toString.call(value) === "[object String]";
 
-export const convertNumberToLocaleString = (number) => Number(number || 0).toLocaleString();
+export const convertNumberToLocaleString = <T>(number: T) => Number(number || 0).toLocaleString();
 
-export const toKebabCase = (string) => {
+export const toKebabCase = (string: string) => {
   if (!string) return string;
 
   return string
