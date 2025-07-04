@@ -1,5 +1,5 @@
-import EventBus from "./lib/event-bus";
-import useEventBus from "./hooks/use-event-bus";
+import EventBus from "./lib/EventBus";
+import useEventBus from "./hooks/UseEventBus";
 
 const createEventBus = () => {
   const eventBusInstance = new EventBus();
