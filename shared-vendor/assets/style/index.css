@@ -37,22 +37,24 @@
     @apply bg-indigo-500 text-white;
   }
 
-  body::-webkit-scrollbar {
+  *::-webkit-scrollbar {
     @apply w-[15px] bg-indigo-50;
   }
 
-  body::-webkit-scrollbar-thumb {
+  *::-webkit-scrollbar-thumb {
     @apply rounded-full border-4 border-indigo-50 bg-indigo-500;
   }
 
-  body::-webkit-scrollbar-track {
+  *::-webkit-scrollbar-track {
     @apply hidden;
   }
 
+  .dark *::-webkit-scrollbar,
   .dark::-webkit-scrollbar {
     @apply bg-gray-900;
   }
 
+  .dark *::-webkit-scrollbar-thumb,
   .dark::-webkit-scrollbar-thumb {
     @apply border-gray-900;
   }
