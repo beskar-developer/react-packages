@@ -15,7 +15,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
         <span className="font-semibold text-red-300">{message}</span>
 
         <BaseButton className="w-80" onClick={resetErrorBoundary}>
-          تلاش دوباره"
+          تلاش دوباره
         </BaseButton>
       </Card>
     </div>
