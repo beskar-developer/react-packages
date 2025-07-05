@@ -6,7 +6,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const message: string = error?.message ?? error;
 
   return (
-    <div className="app-container flex size-full items-center justify-center">
+    <div className="app-container flex size-full items-center justify-center p-0">
       <Card className="flex flex-col items-center gap-8 p-8">
         <ErrorSvg className="size-60" />
 
