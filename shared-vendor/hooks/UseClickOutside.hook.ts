@@ -12,7 +12,7 @@ export const useOutsideClick = <T extends HTMLElement>(
 
     const isInsideClicked = checkComposedPath(element, event);
 
-    if (isInsideClicked) return;
+    if (!element || isInsideClicked) return;
 
     callback();
   };

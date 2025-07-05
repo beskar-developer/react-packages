@@ -38,7 +38,7 @@ const Open = ({ name = "default", render }: OpenProps) => {
 };
 
 const Window = ({ name = "default", render, title }: WindowProps) => {
-  const { isOpen, ref } = useModalWindow(name);
+  const { isOpen, ref, close } = useModalWindow(name);
 
   return createPortal(
     <AnimatePresence>
@@ -51,7 +51,7 @@ const Window = ({ name = "default", render, title }: WindowProps) => {
           className="fixed top-[50%] left-[50%] z-20 flex h-screen w-screen translate-[-50%] items-center justify-center backdrop-blur-xs"
         >
           <Card
-            className="flex min-w-100 flex-col gap-6 rounded-xl border-none px-4 py-6 dark:text-white"
+            className="flex w-full min-w-100 cursor-auto flex-col gap-6 rounded-xl border-none px-4 py-6 sm:w-auto dark:text-white"
             ref={ref}
           >
             <div className="flex items-center gap-4">
@@ -62,7 +62,7 @@ const Window = ({ name = "default", render, title }: WindowProps) => {
               {title && <span className="font-md font-bold">{title}</span>}
             </div>
 
-            <div>{render({ onClose: close })}</div>
+            <div>{render({ close })}</div>
           </Card>
         </motion.div>
       )}

@@ -48,5 +48,6 @@ export const useModalWindow = (name: string) => {
   return {
     ref,
     isOpen,
+    close,
   };
 };

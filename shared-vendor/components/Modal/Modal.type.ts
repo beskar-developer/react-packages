@@ -20,6 +20,6 @@ export interface OpenProps {
 
 export interface WindowProps {
   name?: string;
-  render: ({ onClose }: { onClose: Close }) => ReactNode;
+  render: ({ close }: { close: Close }) => ReactNode;
   title?: string;
 }
