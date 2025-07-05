@@ -28,7 +28,7 @@ const MODAL_ANIMATION_VARIANT: Record<AnimationVariant, Variant> = {
 const ModalComponent = ({ children }: ModalProps) => {
   const value = useModal();
 
-  return <context.Provider value={value}>{children}</context.Provider>;
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };
 
 const Open = ({ name = "default", render }: OpenProps) => {
