@@ -29,9 +29,12 @@ export const usePromise = <Args extends unknown[], Return>(
   const [error, setError] = useState<unknown>(null);
   const [data, setData] = usePersistState<Return>(defaultData as Return, key, { ttl });
 
-  const execute = async (...params: Args) => {
-    if (loading || hasData(data)) return;
+  let isForced = false;
 
+  const execute = async (...params: Args) => {
+    if (!isForced && (loading || hasData(data))) return;
+
+    isForced = false;
     setLoading(true);
     setError(null);
 
@@ -52,11 +55,10 @@ export const usePromise = <Args extends unknown[], Return>(
     }
   };
 
-  const executeWithoutArgs = () => (execute as () => Promise<Return>)();
-  const resetData = () => setData(defaultData as Return);
+  const executeWithoutArgs = execute as () => Promise<Return>;
 
   const reExecute = () => {
-    resetData();
+    isForced = true;
 
     return executeWithoutArgs();
   };
