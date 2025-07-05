@@ -1,38 +1,10 @@
 import type { Variant } from "motion";
+import type { AnimationVariant, ModalProps, OpenProps, WindowProps } from "./Modal.type";
+
 import { createPortal } from "react-dom";
 
 import { AiFillCloseCircle } from "react-icons/ai";
 
-type Open = (openName: string) => void;
-type Close = () => void;
-type AnimationVariant = "initial" | "exit" | "enter";
-
-interface Context {
-  open: Open;
-  close: Close;
-  openName: string;
-}
-
-interface ModalProps {
-  children: ReactNode;
-}
-
-interface OpenProps {
-  name?: string;
-  render: ({ open }: { open: () => void }) => ReactNode;
-}
-
-interface WindowProps {
-  name?: string;
-  render: ({ onClose }: { onClose: Close }) => ReactNode;
-  title?: string;
-}
-
-const DEFAULT_CONTENT = {
-  open: () => {},
-  close: () => {},
-  openName: "default",
-};
 const MODAL_ANIMATION_VARIANT: Record<AnimationVariant, Variant> = {
   initial: {
     clipPath: "circle(0 at 0% 50%)",
@@ -53,28 +25,20 @@ const MODAL_ANIMATION_VARIANT: Record<AnimationVariant, Variant> = {
   },
 };
 
-const ModalContext = createContext<Context>(DEFAULT_CONTENT);
-
 const ModalComponent = ({ children }: ModalProps) => {
-  const [openName, setOpenName] = useState("");
+  const value = useModal();
 
-  const close = () => setOpenName("");
-  const open = setOpenName;
-
-  return <ModalContext.Provider value={{ openName, close, open }}>{children}</ModalContext.Provider>;
+  return <context.Provider value={value}>{children}</context.Provider>;
 };
 
 const Open = ({ name = "default", render }: OpenProps) => {
-  const { open } = useContext(ModalContext);
+  const open = useModalOpen(name);
 
-  return render({ open: () => open(name) });
+  return render({ open });
 };
 
 const Window = ({ name = "default", render, title }: WindowProps) => {
-  const { openName, close } = useContext(ModalContext);
-  const ref = useOutsideClick<HTMLDivElement>(close);
-
-  const isOpen = name === openName;
+  const { isOpen, ref } = useModalWindow(name);
 
   return createPortal(
     <AnimatePresence>
