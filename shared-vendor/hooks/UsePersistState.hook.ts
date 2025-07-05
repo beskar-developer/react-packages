@@ -13,7 +13,7 @@ const toValue = <T>(value: Value<T>) => {
 export const usePersistState = <T>(
   initialState: Value<T>,
   key: string,
-  storage = localStorage,
+  { storage = localStorage, ttl = 0 } = {},
 ): [T, React.Dispatch<React.SetStateAction<T>>] => {
   const [value, setValue] = useState<T>(() => {
     const storedValue = storage.getItem(key);
@@ -22,7 +22,9 @@ export const usePersistState = <T>(
   });
 
   useEffect(() => {
-    storage.setItem(key, value);
+    storage.setItem(key, value, {
+      ttl,
+    });
   }, [value]);
 
   return [value, setValue];
