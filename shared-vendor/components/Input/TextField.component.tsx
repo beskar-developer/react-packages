@@ -1,11 +1,17 @@
-interface Props extends ComponentProps<"input"> {
+interface DefaultProps {
   name: string;
   label?: string;
   labelFallback?: ReactNode;
   hint?: string;
   errorMessage?: string;
   messageFallback?: ReactNode;
+  textarea?: boolean;
 }
+type HTMLInputProps = ComponentProps<"input">;
+type HTMLTextAreaProps = ComponentProps<"textarea">;
+type InputProps = DefaultProps & HTMLInputProps & { textarea?: false };
+type TextareaProps = DefaultProps & HTMLTextAreaProps & { textarea: true };
+type Props = InputProps | TextareaProps;
 
 const ANIMATION_CONFIG = { opacity: 0, scale: 0, transformOrigin: "right" };
 
@@ -17,11 +23,26 @@ export const TextField = ({
   errorMessage,
   messageFallback,
   disabled,
+  textarea,
   ref,
   ...props
 }: Props) => {
   const message = errorMessage || hint;
   const messageElement = messageFallback || message;
+
+  const attrs = {
+    className: "size-full",
+    ref,
+    id: name,
+    name,
+    disabled,
+    ...props,
+  };
+  const inputComponent = textarea ? (
+    <textarea {...(attrs as HTMLTextAreaProps)} />
+  ) : (
+    <input {...(attrs as HTMLInputProps)} />
+  );
 
   return (
     <div className={`flex flex-col gap-2 ${disabled ? "cursor-not-allowed opacity-55" : ""}`}>
@@ -30,7 +51,7 @@ export const TextField = ({
       </label>
 
       <div className="rounded-md bg-indigo-50 p-2 text-base dark:bg-gray-700 dark:text-indigo-50">
-        <input className="size-full" ref={ref} id={name} name={name} disabled={disabled} {...props} />
+        {inputComponent}
       </div>
 
       <AnimatePresence>
