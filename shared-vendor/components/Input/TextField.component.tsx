@@ -39,7 +39,7 @@ export const TextField = ({
     ...props,
   };
   const inputComponent = textarea ? (
-    <textarea {...(attrs as HTMLTextAreaProps)} />
+    <textarea {...(attrs as HTMLTextAreaProps)} className={twMerge(attrs.className, "overflow-hidden")} />
   ) : (
     <input {...(attrs as HTMLInputProps)} />
   );
