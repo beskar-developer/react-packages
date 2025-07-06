@@ -21,7 +21,7 @@ class StorageFactory implements Storage {
   setItem(key: string, value: unknown, options?: StorageOptions) {
     const parsedOptions = storageOptionsSchema.parse(options);
 
-    const { secure = true, ttl = 0 } = parsedOptions;
+    const { secure, ttl } = parsedOptions;
     const data = storageMapper.toSetData(value, { secure, ttl });
 
     this.#storage.setItem(key, data);

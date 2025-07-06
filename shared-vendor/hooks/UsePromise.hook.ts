@@ -1,8 +1,9 @@
+const ONE_MINUTE = 60 * 1000;
 const DEFAULT_OPTIONS = {
   throwOnError: false,
   defaultData: null,
   immediate: false,
-  ttl: 0,
+  ttl: ONE_MINUTE,
 };
 
 const hasData = (value: unknown) => {
