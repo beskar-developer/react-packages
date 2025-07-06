@@ -2,8 +2,6 @@ type Options = {
   keyName?: string;
   index?: boolean;
 };
-type Key = string;
-
 const DEFAULT_OPTIONS: Options = {
   keyName: "id",
   index: false,
@@ -11,17 +9,17 @@ const DEFAULT_OPTIONS: Options = {
 
 export function findByKey<T extends object>(
   items: Array<T>,
-  key: Key,
+  key: unknown,
   options: Omit<Options, "index"> & { index: true },
 ): number;
 
 export function findByKey<T extends object>(
   items: Array<T>,
-  key: Key,
+  key: unknown,
   options?: Omit<Options, "index"> & { index?: false },
 ): T | undefined;
 
-export function findByKey<T extends object>(items: Array<T>, key: Key, options?: Options) {
+export function findByKey<T extends object>(items: Array<T>, key: unknown, options?: Options) {
   const { keyName = "id", index = false } = { ...DEFAULT_OPTIONS, ...options };
 
   return items[index ? "findIndex" : "find"]((item) => getValueByPath(item, keyName) === key);
