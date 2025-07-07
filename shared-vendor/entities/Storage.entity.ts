@@ -6,9 +6,11 @@ class StorageData {
   expire: number;
 
   constructor(value: unknown, { secure = true, ttl }: StorageOptions) {
+    const hasTtl = ttl || ttl === 0;
+
     this.value = value;
     this.isSecure = secure;
-    this.expire = ttl || ttl === 0 ? +new Date().valueOf() + ttl : 0;
+    this.expire = hasTtl ? +new Date().valueOf() + ttl : 0;
   }
 }
 
