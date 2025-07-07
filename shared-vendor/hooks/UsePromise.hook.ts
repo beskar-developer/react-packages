@@ -19,7 +19,7 @@ export const usePromise = <Args extends unknown[], Return>(
   options: {
     key: string;
     throwOnError?: boolean;
-    defaultData?: Return | null;
+    defaultData?: Partial<Return> | null;
     immediate?: boolean;
     ttl?: number;
   },
@@ -58,10 +58,10 @@ export const usePromise = <Args extends unknown[], Return>(
 
   const executeWithoutArgs = execute as () => Promise<Return>;
 
-  const reExecute = () => {
+  const reExecute = (...args: Args) => {
     isForced = true;
 
-    return executeWithoutArgs();
+    return execute(...args);
   };
 
   useEffect(() => {
