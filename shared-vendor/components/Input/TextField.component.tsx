@@ -31,7 +31,7 @@ export const TextField = ({
   const messageElement = messageFallback || message;
 
   const attrs = {
-    className: "size-full",
+    className: "size-full placeholder-gray-400 ",
     ref,
     id: name,
     name,
@@ -46,7 +46,7 @@ export const TextField = ({
 
   return (
     <div className={`flex flex-col gap-2 ${disabled ? "cursor-not-allowed opacity-55" : ""}`}>
-      <label className="text-xs text-gray-600 dark:text-indigo-100" htmlFor={`#${name}`}>
+      <label className="text-xs text-gray-600 dark:text-indigo-100" htmlFor={name}>
         {labelFallback || label}
       </label>
 
