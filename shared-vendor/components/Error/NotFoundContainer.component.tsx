@@ -9,7 +9,7 @@ interface Props {
 export const NotFoundContainer = ({ children, message, itemCount }: Props) => {
   return (
     <AnimatePresence>
-      {!itemCount ? <NotFound message={message} {...itemAnimationConfig} /> : children}
+      {!itemCount ? <NotFound message={message} {...itemAnimationConfig} /> : <>{children}</>}
     </AnimatePresence>
   );
 };
