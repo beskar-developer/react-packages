@@ -26,14 +26,15 @@ export const usePromise = <Args extends unknown[], Return>(
 ) => {
   const { throwOnError, defaultData, immediate, key, ttl } = { ...DEFAULT_OPTIONS, ...options };
 
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [data, setData] = usePersistState<Return>(defaultData as Return, key, { ttl });
+  const [loading, setLoading] = useState(() => immediate && !hasData(data));
+  const isFetching = loading && !immediate;
 
   let isForced = false;
 
   const execute = async (...params: Args) => {
-    if (!isForced && (loading || hasData(data))) return;
+    if (!isForced && (isFetching || hasData(data))) return;
 
     isForced = false;
     setLoading(true);
