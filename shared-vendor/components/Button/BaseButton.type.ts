@@ -1,5 +1,5 @@
 export type Variant = "filled" | "tonal" | "outlined" | "text";
-export type Color = "indigo" | "red" | "emerald" | "neutral";
+export type Color = "indigo" | "red" | "emerald" | "neutral" | "sky";
 
 export interface Props extends ComponentProps<"button"> {
   label?: string;
