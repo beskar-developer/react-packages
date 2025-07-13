@@ -2,14 +2,21 @@ import type {
   AxiosDefaults,
   AxiosError,
   AxiosHeaders,
+  AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
 
-export type OnRequest = (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig;
-export type OnResponse = (response: AxiosResponse) => AxiosResponse;
-export type OnRequestError = (error: AxiosError) => Promise<AxiosError>;
-export type onResponseError = (error: AxiosError) => Promise<AxiosError>;
+export type Instance = AxiosInstance;
+
+export type OnRequest = (
+  config: InternalAxiosRequestConfig,
+  instance: Instance,
+) => InternalAxiosRequestConfig;
+
+export type OnResponse = (response: AxiosResponse, instance: Instance) => AxiosResponse;
+export type OnRequestError = (error: AxiosError, instance: Instance) => Promise<AxiosError>;
+export type onResponseError = (error: AxiosError, instance: Instance) => Promise<AxiosError>;
 
 export type HTTPClientInterceptor = Partial<{
   onResponse: OnResponse;

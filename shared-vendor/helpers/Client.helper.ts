@@ -1,7 +1,8 @@
-import axios, { type AxiosInstance } from "axios";
+import axios from "axios";
 
 import type {
   HttpClientOptions,
+  Instance,
   OnRequest,
   OnRequestError,
   OnResponse,
@@ -14,14 +15,9 @@ const DEFAULT_INTERCEPTORS = [tokenInterceptor, normalizerInterceptor];
 
 const isDev = import.meta.env.DEV;
 const BASE_URL = getEnv("DEFAULT_URL");
-const GATEWAY_SYSTEM = getEnv("GATEWAY_SYSTEM");
 
 const DEFAULTS = {
   timeout: 2 * 60 * 1000,
-};
-const DEFAULT_HEADERS = {
-  system: GATEWAY_SYSTEM,
-  "gateway-system": GATEWAY_SYSTEM,
 };
 
 const DEFAULT_DOMAIN = "";
@@ -32,7 +28,7 @@ const onResponseFallback: OnResponse = (response) => response;
 const onResponseErrorFallback: onResponseError = (error) => Promise.reject(error);
 
 class Client {
-  client: AxiosInstance;
+  client: Instance;
 
   constructor({
     baseURL = BASE_URL,
@@ -42,13 +38,14 @@ class Client {
     interceptors = DEFAULT_INTERCEPTORS,
   }: HttpClientOptions = {}) {
     const normalizedDefaults = { ...DEFAULTS, ...defaults };
-    const normalizedHeaders = { ...DEFAULT_HEADERS, ...headers };
 
-    this.client = axios.create({
+    const instance = axios.create({
       ...normalizedDefaults,
       baseURL: `${!isDev ? baseURL : ""}${domain ? "/" : ""}${domain}`,
-      headers: normalizedHeaders,
+      headers,
     });
+
+    this.client = instance;
 
     interceptors.forEach(
       ({
@@ -57,8 +54,14 @@ class Client {
         onResponse = onResponseFallback,
         onResponseError = onResponseErrorFallback,
       }) => {
-        this.client.interceptors.request.use(onRequest, onRequestError);
-        this.client.interceptors.response.use(onResponse, onResponseError);
+        this.client.interceptors.request.use(
+          (request) => onRequest(request, instance),
+          (error) => onRequestError(error, instance),
+        );
+        this.client.interceptors.response.use(
+          (response) => onResponse(response, instance),
+          (error) => onResponseError(error, instance),
+        );
       },
     );
   }
