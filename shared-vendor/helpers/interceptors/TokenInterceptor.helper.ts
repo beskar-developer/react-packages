@@ -1,24 +1,38 @@
-import { eventBusContext } from "@shared-vendor/libs";
-import type { OnRequest } from "@shared-vendor/types";
+import type { OnRequest, onResponseError } from "@shared-vendor/types";
 
-const { eventBus } = eventBusContext;
+import { Token } from "@shared-vendor/helpers";
 
-let token: string = "";
-
-eventBus.on("token:change", (newToken) => {
-  token = newToken as string;
-});
+const INVALID_AUTHENTICATION_STATUS_CODES = [401];
+const isInvalidAuthentication = (code: number) => INVALID_AUTHENTICATION_STATUS_CODES.includes(code);
 
 const onRequest: OnRequest = (request) => {
+  const token = Token.getAccessToken();
+
   if (!token) return request;
 
   request.headers = request.headers ?? {};
-  request.headers["gateway-token"] = token;
-  request.headers["token"] = token;
+  request.headers[Token.ACCESS_HEADER_KEY] = token;
 
   return request;
 };
 
+const onInvalidAuthentication: onResponseError = async (error, instance) => {
+  const token = await Token.requestAccessToken();
+
+  const request = error.config!;
+
+  request.headers[Token.ACCESS_HEADER_KEY] = token;
+
+  return instance.request(request);
+};
+
+const onResponseError: onResponseError = (error, instance) => {
+  if (isInvalidAuthentication(error.status as number)) return onInvalidAuthentication(error, instance);
+
+  return Promise.reject(error);
+};
+
 export default {
   onRequest,
+  onResponseError,
 };
