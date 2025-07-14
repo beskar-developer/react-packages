@@ -1,17 +1,4 @@
-interface DefaultProps {
-  name: string;
-  label?: string;
-  labelFallback?: ReactNode;
-  hint?: string;
-  errorMessage?: string;
-  messageFallback?: ReactNode;
-  textarea?: boolean;
-}
-type HTMLInputProps = ComponentProps<"input">;
-type HTMLTextAreaProps = ComponentProps<"textarea">;
-type InputProps = DefaultProps & HTMLInputProps & { textarea?: false };
-type TextareaProps = DefaultProps & HTMLTextAreaProps & { textarea: true };
-type Props = InputProps | TextareaProps;
+import type { HTMLInputProps, HTMLTextAreaProps, Props } from "./TextField.type";
 
 const ANIMATION_CONFIG = { opacity: 0, scale: 0, transformOrigin: "right" };
 
@@ -25,6 +12,8 @@ export const TextField = ({
   disabled,
   textarea,
   ref,
+  prependIcon,
+  appendIcon,
   ...props
 }: Props) => {
   const message = errorMessage || hint;
@@ -38,6 +27,7 @@ export const TextField = ({
     disabled,
     ...props,
   };
+
   const inputComponent = textarea ? (
     <textarea {...(attrs as HTMLTextAreaProps)} className={twMerge(attrs.className, "overflow-hidden")} />
   ) : (
@@ -50,8 +40,12 @@ export const TextField = ({
         {labelFallback || label}
       </label>
 
-      <div className="rounded-md bg-indigo-50 p-2 text-base dark:bg-gray-700 dark:text-indigo-50">
+      <div className="flex items-center gap-4 rounded-md bg-indigo-50 p-2 text-base dark:bg-gray-700 dark:text-indigo-50">
+        {prependIcon}
+
         {inputComponent}
+
+        {appendIcon}
       </div>
 
       <AnimatePresence>
