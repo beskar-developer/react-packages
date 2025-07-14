@@ -1,3 +1,5 @@
+import { AutoBind } from "@shared-vendor/types";
+
 import { cookie } from "@shared-vendor/services";
 
 const ONE_MINUTE = 60 * 1000;
@@ -60,10 +62,12 @@ class Token {
     resolve(token);
   }
 
+  @AutoBind
   clearRequest() {
     this.onRequestAccessTokenCallback = DEFAULT_CALLBACK;
   }
 
+  @AutoBind
   onRequestAccessToken(callback: () => void) {
     this.onRequestAccessTokenCallback = callback;
 
