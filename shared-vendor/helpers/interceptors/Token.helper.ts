@@ -5,13 +5,17 @@ import { Token } from "@shared-vendor/helpers";
 const INVALID_AUTHENTICATION_STATUS_CODES = [401];
 const isInvalidAuthentication = (code: number) => INVALID_AUTHENTICATION_STATUS_CODES.includes(code);
 
+const addAccessHeaders = (request: Parameters<OnRequest>[0], token: string) => {
+  request.headers = request.headers ?? {};
+  request.headers[Token.ACCESS_HEADER_KEY] = token;
+};
+
 const onRequest: OnRequest = (request) => {
   const token = Token.getAccessToken();
 
   if (!token) return request;
 
-  request.headers = request.headers ?? {};
-  request.headers[Token.ACCESS_HEADER_KEY] = token;
+  addAccessHeaders(request, token);
 
   return request;
 };
@@ -21,7 +25,7 @@ const onInvalidAuthentication: onResponseError = async (error, instance) => {
 
   const request = error.config!;
 
-  request.headers[Token.ACCESS_HEADER_KEY] = token;
+  addAccessHeaders(request, token);
 
   return instance.request(request);
 };

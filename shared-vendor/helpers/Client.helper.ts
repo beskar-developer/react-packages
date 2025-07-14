@@ -9,9 +9,9 @@ import type {
   onResponseError,
 } from "@shared-vendor/types";
 
-import { normalizerInterceptor, tokenInterceptor } from "./interceptors";
+import { normalizerInterceptor, toastInterceptor, tokenInterceptor } from "./interceptors";
 
-const DEFAULT_INTERCEPTORS = [tokenInterceptor, normalizerInterceptor];
+const DEFAULT_INTERCEPTORS = [tokenInterceptor, toastInterceptor, normalizerInterceptor];
 
 const isDev = import.meta.env.DEV;
 const BASE_URL = getEnv("DEFAULT_URL");
