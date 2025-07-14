@@ -53,7 +53,7 @@ export const BaseButton = ({
       onClick={onClick}
       disabled={disabled}
       className={twMerge(
-        "flex cursor-pointer items-center justify-center rounded-md p-2 text-center text-sm transition select-none hover:scale-[105%] disabled:cursor-not-allowed disabled:opacity-55",
+        "flex cursor-pointer items-center justify-center gap-2 rounded-md p-2 text-center text-sm transition select-none hover:scale-[105%] disabled:cursor-not-allowed disabled:opacity-55",
         BUTTON_CLASS_MAP[variant][color],
         icon ? "size-10" : "h-10",
         className,
