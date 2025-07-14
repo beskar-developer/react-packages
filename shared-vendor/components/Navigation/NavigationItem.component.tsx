@@ -1,0 +1,29 @@
+import type { INavigationItem } from "./NavigationItem.type";
+
+export const NavigationItem = ({
+  Icon,
+  label,
+  active,
+  expanded,
+  padding,
+  childrenCount,
+  ...props
+}: INavigationItem) => {
+  const style = padding ? { paddingRight: `${padding}px` } : {};
+
+  return (
+    <div
+      className={twMerge(
+        "font-sm flex cursor-pointer items-center justify-between rounded-md px-2 py-2.5",
+        !active && "hover:bg-gray-200 dark:hover:bg-gray-800",
+        active && "bg-indigo-500 text-white",
+      )}
+      style={style}
+      {...props}
+    >
+      <NavigationItemContent Icon={Icon} label={label} />
+
+      <NavigationExpandIcon expanded={expanded} childrenCount={childrenCount} />
+    </div>
+  );
+};
