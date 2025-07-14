@@ -69,6 +69,11 @@ class Token {
 
     return this.clearRequest;
   }
+
+  clear() {
+    this.removeAccessToken();
+    this.removeRefreshToken();
+  }
 }
 
 export default new Token();
