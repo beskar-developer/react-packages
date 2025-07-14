@@ -1,14 +1,14 @@
-type Take = <T>(item: T) => T | string;
-type Callback = <T>(item?: T, itemCopy?: T, set?: InstanceType<typeof Set<T>>) => void;
+type Take<T> = (item: T) => T | string;
+type Callback<T> = (item?: T, itemCopy?: T, set?: InstanceType<typeof Set<T>>) => void;
 
-const DEFAULT_TAKE: Take = (item) => item;
+const DEFAULT_TAKE: Take<unknown> = (item) => item;
 const SET_STRING = "[object Set]";
 
 export default class Set<T> {
   map = new Map();
   take;
 
-  constructor(iterable: Iterable<T>, take: Take) {
+  constructor(iterable: Iterable<T>, take: Take<T>) {
     this.take = take || DEFAULT_TAKE;
 
     if (!iterable) return;
@@ -91,7 +91,7 @@ export default class Set<T> {
     return this[Symbol.iterator]();
   }
 
-  foreach(callback: Callback) {
+  foreach(callback: Callback<T>) {
     for (const item of this) callback.apply(this, [item, item, this]);
   }
 
