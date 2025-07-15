@@ -13,3 +13,6 @@ export const toKebabCase = (string: string) => {
     .replace(/\s+/g, "-")
     .toLowerCase();
 };
+
+export const toCamelCase = (string: string) =>
+  string.replace(/[_-](\w)/g, (_, letter) => letter.toUpperCase());
