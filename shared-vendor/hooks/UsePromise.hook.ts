@@ -1,4 +1,5 @@
-const ONE_MINUTE = 60 * 1000;
+import { ONE_MINUTE } from "@shared-vendor/constants";
+
 const DEFAULT_OPTIONS = {
   throwOnError: false,
   defaultData: null,

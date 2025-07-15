@@ -1,10 +1,8 @@
 import { AutoBind } from "@shared-vendor/types";
 
-import { cookie } from "@shared-vendor/services";
+import { ONE_DAY, ONE_MINUTE } from "@shared-vendor/constants";
 
-const ONE_MINUTE = 60 * 1000;
-const OHE_HOUR = 60 * ONE_MINUTE;
-const ONE_DAY = 24 * OHE_HOUR;
+import { cookie } from "@shared-vendor/services";
 
 const DEFAULT_CALLBACK = () => {};
 
