@@ -14,6 +14,7 @@ export const TextField = ({
   ref,
   prependIcon,
   appendIcon,
+  containerClassName,
   ...props
 }: Props) => {
   const message = errorMessage || hint;
@@ -40,7 +41,12 @@ export const TextField = ({
         {labelFallback || label}
       </label>
 
-      <div className="flex items-center gap-4 rounded-md bg-indigo-50 p-2 text-base dark:bg-gray-700 dark:text-indigo-50">
+      <div
+        className={twMerge(
+          "flex items-center gap-4 rounded-md bg-indigo-50 p-2 text-base dark:bg-gray-700 dark:text-indigo-50",
+          containerClassName,
+        )}
+      >
         {prependIcon}
 
         {inputComponent}

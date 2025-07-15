@@ -7,6 +7,7 @@ interface DefaultProps {
   messageFallback?: ReactNode;
   prependIcon?: ReactNode;
   appendIcon?: ReactNode;
+  containerClassName?: string;
 }
 
 export type HTMLInputProps = ComponentProps<"input">;
