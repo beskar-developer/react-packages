@@ -1,3 +1,5 @@
+import type { KeysToCamelCase } from "@shared-vendor/types";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const deepClone = <T extends object>(object: T): T => JSON.parse(JSON.stringify(object));
 
@@ -22,3 +24,12 @@ export const getValueByPath = <T extends object>(object: T, path: string) => {
 
   return reference[key];
 };
+
+export const toCamelCaseKeys = <T extends object>(object: T) =>
+  Object.entries(object).reduce(
+    (acc, [key, value]) => ({
+      ...acc,
+      [toCamelCase(key)]: value,
+    }),
+    {} as KeysToCamelCase<T>,
+  );
