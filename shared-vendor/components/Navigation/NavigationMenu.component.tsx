@@ -7,6 +7,7 @@ export const NavigationMenu = ({ items, itemPadding = 0 }: INavigationMenu) => {
     <nav className="flex flex-col gap-1">
       {items.map((item) => (
         <NavigationGroup
+          key={item.path}
           item={item}
           itemPadding={itemPadding}
           active={isActive(item)}
