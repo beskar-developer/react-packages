@@ -8,7 +8,7 @@ export const Pagination = ({ page, totalPages, onPageChange }: IPagination) => {
   });
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2 md:gap-4">
       <PaginationButton direction="NEXT" disabled={isNextDisabled} onClick={goToNext} />
 
       <PaginationContent page={page} totalPages={totalPages} />
