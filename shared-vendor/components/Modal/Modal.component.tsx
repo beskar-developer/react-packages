@@ -55,7 +55,7 @@ const Window = ({ name = "default", render, title }: WindowProps) => {
             ref={ref}
           >
             <div className="flex items-center gap-4">
-              <BaseButton onClick={close} icon variant="text" color="red">
+              <BaseButton onClick={close} icon variant="text" color="error">
                 <AiFillCloseCircle />
               </BaseButton>
 

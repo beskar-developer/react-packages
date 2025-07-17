@@ -1,0 +1,9 @@
+@layer utilities {
+  .h-screen {
+    height: 100dvh;
+  }
+
+  .w-screen {
+    width: 100dvw;
+  }
+}

@@ -37,13 +37,13 @@ export const TextField = ({
 
   return (
     <div className={`flex flex-col gap-2 ${disabled ? "cursor-not-allowed opacity-55" : ""}`}>
-      <label className="text-xs text-gray-600 dark:text-indigo-100" htmlFor={name}>
+      <label className="dark:text-primary-100 text-surface-600 text-xs" htmlFor={name}>
         {labelFallback || label}
       </label>
 
       <div
         className={twMerge(
-          "flex items-center gap-4 rounded-md bg-indigo-50 p-2 text-base dark:bg-gray-700 dark:text-indigo-50",
+          "bg-primary-50 dark:text-primary-50 dark:bg-surface-700 flex items-center gap-4 rounded-md p-2 text-base",
           containerClassName,
         )}
       >
@@ -60,7 +60,7 @@ export const TextField = ({
             initial={ANIMATION_CONFIG}
             exit={ANIMATION_CONFIG}
             animate={{ opacity: 1, scale: 1 }}
-            className={`text-xs ${errorMessage ? "text-red-500 dark:text-red-300" : "text-indigo-500"}`}
+            className={`text-xs ${errorMessage ? "text-error-500 dark:text-error-300" : "text-primary-500"}`}
           >
             {messageElement}
           </motion.span>

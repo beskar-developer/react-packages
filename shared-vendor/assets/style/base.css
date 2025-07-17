@@ -1,0 +1,64 @@
+@layer base {
+  @font-face {
+    font-family: vazir;
+    src: url("/packages/fonts/vazir/Vazir-FD-WOL.ttf");
+  }
+
+  input[type="number"] {
+    appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    @apply m-0 appearance-none;
+
+    -webkit-appearance: none;
+  }
+
+  input,
+  textarea,
+  select,
+  dialog,
+  button {
+    @apply outline-none;
+  }
+
+  :is(input, button, textarea, select):is(:-webkit-autofill, :autofill) {
+    @apply bg-clip-text;
+  }
+
+  .dark :is(input, button, textarea, select):is(:-webkit-autofill, :autofill) {
+    -webkit-text-fill-color: var(--color-white);
+  }
+
+  *::selection {
+    @apply bg-primary-500 text-white;
+  }
+
+  *::-webkit-scrollbar {
+    @apply bg-primary-50 w-[15px];
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply border-primary-50 bg-primary-500 rounded-full border-4;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply hidden;
+  }
+
+  .dark *::-webkit-scrollbar,
+  .dark::-webkit-scrollbar {
+    @apply bg-surface-900;
+  }
+
+  .dark *::-webkit-scrollbar-thumb,
+  .dark::-webkit-scrollbar-thumb {
+    @apply border-gray-900;
+  }
+
+  /* for theme change animation */
+  body * {
+    @apply transition-colors duration-500;
+  }
+}

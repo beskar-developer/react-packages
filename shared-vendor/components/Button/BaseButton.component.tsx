@@ -3,32 +3,32 @@ import type { Color, Props, Variant } from "./BaseButton.type";
 const OUTLINED_BASE_CLASS = "bg-transparent border-2";
 const BUTTON_CLASS_MAP: Record<Variant, Record<Color, string>> = {
   filled: {
-    indigo: "bg-indigo-500 text-indigo-50",
-    red: "bg-red-500 text-red-50",
+    primary: "bg-primary-500 text-primary-50",
+    error: "bg-error-500 text-error-50",
     neutral: "bg-black text-white dark:bg-white dark:text-black",
-    emerald: "bg-emerald-500 text-emerald-50",
-    sky: "bg-sky-500 text-sky-50",
+    success: "bg-success-500 text-success-50",
+    info: "bg-info-500 text-info-50",
   },
   tonal: {
-    indigo: "bg-indigo-200 text-indigo-500",
-    red: "bg-red-200 text-red-500",
+    primary: "bg-primary-200 text-primary-500",
+    error: "bg-error-200 text-error-500",
     neutral: "",
-    emerald: "bg-emerald-200 text-emerald-500",
-    sky: "bg-sky-200 text-sky-500",
+    success: "bg-success-200 text-success-500",
+    info: "bg-info-200 text-info-500",
   },
   outlined: {
-    indigo: twMerge(OUTLINED_BASE_CLASS, "border-indigo-500 text-indigo-500"),
-    red: twMerge(OUTLINED_BASE_CLASS, "border-red-500 text-red-500"),
+    primary: twMerge(OUTLINED_BASE_CLASS, "border-primary-500 text-primary-500"),
+    error: twMerge(OUTLINED_BASE_CLASS, "border-error-500 text-error-500"),
     neutral: OUTLINED_BASE_CLASS,
-    emerald: twMerge(OUTLINED_BASE_CLASS, "border-emerald-500 text-emerald-500"),
-    sky: twMerge(OUTLINED_BASE_CLASS, "border-sky-500 text-sky-500"),
+    success: twMerge(OUTLINED_BASE_CLASS, "border-success-500 text-success-500"),
+    info: twMerge(OUTLINED_BASE_CLASS, "border-info-500 text-info-500"),
   },
   text: {
-    indigo: "hover:bg-indigo-200 hover:text-indigo-600 text-indigo-500",
-    red: "hover:bg-red-200 hover:text-red-600 text-red-500",
+    primary: "hover:bg-primary-200 hover:text-primary-600 text-primary-500",
+    error: "hover:bg-error-200 hover:text-error-600 text-error-500",
     neutral: "",
-    emerald: "hover:bg-emerald-200 hover:text-emerald-600 text-emerald-500",
-    sky: "hover:bg-sky-200 hover:text-sky-600 text-sky-500",
+    success: "hover:bg-success-200 hover:text-success-600 text-success-500",
+    info: "hover:bg-info-200 hover:text-info-600 text-info-500",
   },
 };
 
@@ -39,7 +39,7 @@ export const BaseButton = ({
   loading,
   variant = "filled",
   icon,
-  color = "indigo",
+  color = "primary",
   ...props
 }: Props) => {
   const { onClick } = useBaseButton({

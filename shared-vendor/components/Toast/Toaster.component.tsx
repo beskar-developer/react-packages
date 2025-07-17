@@ -6,18 +6,18 @@ interface Props extends Omit<ToasterProps, "children"> {
 
 const TOAST_OPTIONS = {
   success: {
-    className: "!bg-emerald-400 !text-emerald-100 !min-w-64",
+    className: "!bg-success-400 !text-success-100 !min-w-64",
     iconTheme: {
-      primary: "var(--color-emerald-100)",
-      secondary: "var(--color-emerald-400)",
+      primary: "var(--color-success-100)",
+      secondary: "var(--color-success-400)",
     },
     duration: 3000,
   },
   error: {
-    className: "!bg-red-400 !text-red-100 !min-w-64",
+    className: "!bg-error-400 !text-error-100 !min-w-64",
     iconTheme: {
-      primary: "var(--color-red-100)",
-      secondary: "var(--color-red-400)",
+      primary: "var(--color-error-100)",
+      secondary: "var(--color-error-400)",
     },
     duration: 4000,
   },

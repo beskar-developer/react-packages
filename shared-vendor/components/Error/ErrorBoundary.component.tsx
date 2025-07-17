@@ -10,9 +10,9 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
       <Card className="flex flex-col items-center gap-8 p-8">
         <ErrorSvg className="size-60" />
 
-        <span className="text-xl font-extrabold text-red-400">مشکلی پیش آمده است...</span>
+        <span className="text-error-400 text-xl font-extrabold">مشکلی پیش آمده است...</span>
 
-        <span className="font-semibold text-red-300">{message}</span>
+        <span className="text-error-300 font-semibold">{message}</span>
 
         <BaseButton className="w-80" onClick={resetErrorBoundary}>
           تلاش دوباره

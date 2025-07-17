@@ -1,12 +1,12 @@
 import type { Props } from "./ToggleButton.type";
 
 const TRACK_CLASS_MAP = {
-  ON: "border-indigo-500 bg-indigo-500 justify-start",
-  OFF: "border-gray-300 bg-gray-300 justify-end",
+  ON: "border-primary-500 bg-primary-500 justify-start",
+  OFF: "border-gray-300 bg-surface-300 justify-end",
 };
 const INDICATOR_CLASS_MAP = {
   ON: "bg-white ",
-  OFF: "bg-gray-400 ",
+  OFF: "bg-surface-400 ",
 };
 const DISABLED_CLASS = "cursor-not-allowed opacity-55";
 

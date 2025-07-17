@@ -1,7 +1,7 @@
 import type { Props, State } from "./Checkbox.type";
 
 const BUTTON_CLASSES: Record<State, string> = {
-  CHECKED: "border-indigo-500 bg-indigo-500",
+  CHECKED: "border-primary-500 bg-primary-500",
   UNCHECKED: "border-gray-400 bg-transparent",
 };
 
