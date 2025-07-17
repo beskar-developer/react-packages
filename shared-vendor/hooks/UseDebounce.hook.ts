@@ -5,6 +5,8 @@ export const useDebounce = <T>(value: T, duration = 500, onChange?: OnChange<T>)
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      if (value === debounceValue) return;
+
       onChange?.(value);
 
       setDebounceValue(value);
