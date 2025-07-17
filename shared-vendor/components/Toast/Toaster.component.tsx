@@ -8,16 +8,16 @@ const TOAST_OPTIONS = {
   success: {
     className: "!bg-success-400 !text-success-100 !min-w-64",
     iconTheme: {
-      primary: "var(--color-success-100)",
-      secondary: "var(--color-success-400)",
+      primary: "var(--color-emerald-100)",
+      secondary: "var(--color-emerald-400)",
     },
     duration: 3000,
   },
   error: {
     className: "!bg-error-400 !text-error-100 !min-w-64",
     iconTheme: {
-      primary: "var(--color-error-100)",
-      secondary: "var(--color-error-400)",
+      primary: "var(--color-red-100)",
+      secondary: "var(--color-red-400)",
     },
     duration: 4000,
   },
