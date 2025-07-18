@@ -15,7 +15,10 @@ export const ImageLoader = ({ src, alt, loading, fallback, className, ...props }
   const imageDisplayClassName = isActiveState("LOADING") ? "hidden" : "inline";
 
   return (
-    <div className={twMerge("flex items-center justify-center overflow-hidden", className)} {...props}>
+    <div
+      className={twMerge("flex items-center justify-center overflow-hidden select-none", className)}
+      {...props}
+    >
       {isActiveState("LOADING") && <Loading className="text-primary-600 size-8" />}
       {isActiveState("ERROR") &&
         (fallback || <img src={fallbackImageSrc} className={DEFAULT_IMAGE_CLASS_NAME} />)}
