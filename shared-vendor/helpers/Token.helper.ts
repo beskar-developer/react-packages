@@ -76,6 +76,10 @@ class Token {
     this.removeAccessToken();
     this.removeRefreshToken();
   }
+
+  isAuthenticated() {
+    return this.getAccessToken();
+  }
 }
 
 export default new Token();
