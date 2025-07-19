@@ -3,7 +3,13 @@ import type { OnRequest, onResponseError } from "@shared-vendor/types";
 import { Token } from "@shared-vendor/helpers";
 
 const INVALID_AUTHENTICATION_STATUS_CODES = [401];
-const isInvalidAuthentication = (code: number) => INVALID_AUTHENTICATION_STATUS_CODES.includes(code);
+const isInvalidAuthentication = (error: Parameters<onResponseError>[0]) => {
+  const code = error.status as number;
+
+  const isAuthentication = error.config?.baseURL?.includes("auth");
+
+  return INVALID_AUTHENTICATION_STATUS_CODES.includes(code) && !isAuthentication;
+};
 
 const addAccessHeaders = (request: Parameters<OnRequest>[0], token: string) => {
   request.headers = request.headers ?? {};
@@ -31,7 +37,7 @@ const onInvalidAuthentication: onResponseError = async (error, instance) => {
 };
 
 const onResponseError: onResponseError = (error, instance) => {
-  if (isInvalidAuthentication(error.status as number)) return onInvalidAuthentication(error, instance);
+  if (isInvalidAuthentication(error)) return onInvalidAuthentication(error, instance);
 
   return Promise.reject(error);
 };

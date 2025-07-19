@@ -1,23 +1,36 @@
 import { AutoBind } from "@shared-vendor/types";
 
-import { ONE_DAY, ONE_MINUTE } from "@shared-vendor/constants";
+import { OHE_HOUR } from "@shared-vendor/constants";
 
 import { cookie } from "@shared-vendor/services";
 
-const DEFAULT_CALLBACK = () => {};
+type WithResolvers = ReturnType<typeof Promise.withResolvers<string>>;
 
-const { promise, resolve } = Promise.withResolvers<string>();
+const DEFAULT_CALLBACK = () => {};
 
 class Token {
   private static readonly ACCESS_KEY = "access-token";
   private static readonly REFRESH_KEY = "refresh-token";
-  private static readonly ACCESS_TTL = 15 * ONE_MINUTE;
-  private static readonly REFRESH_TTL = ONE_DAY;
+  private static readonly ACCESS_TTL = OHE_HOUR;
+  private static readonly REFRESH_TTL = 24 * OHE_HOUR;
   readonly ACCESS_HEADER_KEY = `x-${Token.ACCESS_KEY}`;
   private onRequestAccessTokenCallback = DEFAULT_CALLBACK;
+  private isRequestingRefreshToken = false;
+
+  private resolve: WithResolvers["resolve"] = DEFAULT_CALLBACK;
+  private reject: WithResolvers["reject"] = DEFAULT_CALLBACK;
 
   private static calculateExpires(ttl: number) {
     return new Date(Date.now() + ttl);
+  }
+
+  private createResolvers() {
+    const { resolve, reject, promise } = Promise.withResolvers<string>();
+
+    this.resolve = resolve;
+    this.reject = reject;
+
+    return promise;
   }
 
   setAccessToken(token: string) {
@@ -49,7 +62,13 @@ class Token {
   }
 
   async requestAccessToken() {
-    this.onRequestAccessTokenCallback();
+    if (!this.isRequestingRefreshToken) {
+      this.isRequestingRefreshToken = true;
+
+      this.onRequestAccessTokenCallback();
+    }
+
+    const promise = this.createResolvers();
 
     return promise;
   }
@@ -57,7 +76,9 @@ class Token {
   respondAccessToken(token: string) {
     this.setAccessToken(token);
 
-    resolve(token);
+    this.isRequestingRefreshToken = false;
+
+    this.resolve(token);
   }
 
   @AutoBind
@@ -73,12 +94,16 @@ class Token {
   }
 
   clear() {
+    this.isRequestingRefreshToken = false;
+
     this.removeAccessToken();
     this.removeRefreshToken();
+
+    this.reject();
   }
 
   isAuthenticated() {
-    return this.getAccessToken();
+    return this.getRefreshToken();
   }
 }
 
