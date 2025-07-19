@@ -14,7 +14,7 @@ export const NavigationItem = ({
   return (
     <div
       className={twMerge(
-        "font-sm flex cursor-pointer items-center justify-between rounded-md px-2 py-2.5",
+        "font-sm flex cursor-pointer items-center justify-between rounded-md px-2 py-2.5 select-none",
         !active && "hover:bg-surface-200 dark:hover:bg-surface-700",
         active && !childrenCount && "bg-primary-500 text-white",
         active && childrenCount && "text-primary-500",
