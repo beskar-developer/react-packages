@@ -13,9 +13,10 @@ export const NavigationGroup = ({
         active={active}
         expanded={expanded}
         padding={itemPadding}
-        onClick={() => onNavigate(item)}
         label={item.label}
+        childrenCount={item.children?.length}
         Icon={item.Icon}
+        onClick={() => onNavigate(item)}
       />
 
       <NavigationChildren children={item.children} expanded={expanded} itemPadding={itemPadding} />

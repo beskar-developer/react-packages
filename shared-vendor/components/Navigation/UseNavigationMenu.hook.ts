@@ -5,6 +5,9 @@ import { Set } from "@shared-vendor/helpers";
 export const useNavigationMenu = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [key, setKey] = useState(1);
+
+  const forceUpdate = () => setKey(key + 1);
 
   const expandedSet = new Set<Item>([{ path: location.pathname }], ({ path }) => path);
 
@@ -25,9 +28,19 @@ export const useNavigationMenu = () => {
   };
 
   const navigateTo = ({ children, path }: Item) => {
-    if (!children) navigate(path);
+    if (!children) {
+      navigate(path);
 
-    if (children) expandItem({ path, children });
+      return;
+    }
+
+    if (children) {
+      expandItem({ path, children });
+
+      forceUpdate();
+
+      return;
+    }
 
     if (isActive({ path })) navigate(0);
   };
