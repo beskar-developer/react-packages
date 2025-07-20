@@ -1,4 +1,4 @@
-export const isString = (value: unknown) =>
+export const isString = (value: unknown): value is string =>
   typeof value === "string" ||
   value instanceof String ||
   Object.prototype.toString.call(value) === "[object String]";
@@ -15,4 +15,4 @@ export const toKebabCase = (string: string) => {
 };
 
 export const toCamelCase = (string: string) =>
-  string.replace(/[_-](\w)/g, (_, letter) => letter.toUpperCase());
+  string.toLowerCase().replace(/[_-](\w)/g, (_, letter) => letter.toUpperCase());
