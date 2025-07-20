@@ -1,11 +1,14 @@
-import { CONTEXT_ERROR_MESSAGE } from "@shared-vendor/constants";
+import type { ThemeMode } from "@shared-vendor/types";
 
-import { ThemeModeContext } from "@shared-vendor/contexts";
+import { createSetMode, createToggleMode, selectTheme } from "@shared-vendor/store/Theme";
 
 export const useThemeMode = () => {
-  const context = useContext(ThemeModeContext);
+  const dispatch = useDispatch();
 
-  if (!context) throw new Error(CONTEXT_ERROR_MESSAGE);
+  const { mode, isDark, isLight } = useSelector(selectTheme);
 
-  return context;
+  const setMode = (mode: ThemeMode) => dispatch(createSetMode(mode));
+  const toggleMode = () => dispatch(createToggleMode());
+
+  return { mode, isLight, isDark, setMode, toggleMode };
 };

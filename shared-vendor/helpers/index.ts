@@ -5,3 +5,4 @@ export { default as VersionLogger } from "./Version.helper";
 export { default as Token } from "./Token.helper";
 export * from "./Router.helper";
 export * from "./Zod.helper";
+export * from "./Theme.helper";
