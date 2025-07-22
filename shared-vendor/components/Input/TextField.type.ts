@@ -1,3 +1,5 @@
+import type { Ref } from "react";
+
 interface DefaultProps {
   name: string;
   label?: string;
@@ -8,6 +10,7 @@ interface DefaultProps {
   prependIcon?: ReactNode;
   appendIcon?: ReactNode;
   containerClassName?: string;
+  containerRef?: Ref<HTMLDivElement>;
 }
 
 export type HTMLInputProps = ComponentProps<"input">;

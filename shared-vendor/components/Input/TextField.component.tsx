@@ -15,6 +15,7 @@ export const TextField = ({
   prependIcon,
   appendIcon,
   containerClassName,
+  containerRef,
   ...props
 }: Props) => {
   const message = errorMessage || hint;
@@ -46,6 +47,7 @@ export const TextField = ({
           "bg-primary-50 dark:text-primary-50 dark:bg-surface-700 flex items-center gap-4 rounded-md p-2 text-base",
           containerClassName,
         )}
+        ref={containerRef}
       >
         {prependIcon}
 
