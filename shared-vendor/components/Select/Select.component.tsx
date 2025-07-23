@@ -1,5 +1,7 @@
 import type { ISelect } from "@shared-vendor/components/Select/Select.type";
 
+import { AiFillCaretDown } from "react-icons/ai";
+
 export const Select = <T extends string>({
   options = [],
   value,
@@ -7,6 +9,8 @@ export const Select = <T extends string>({
   label,
   disabled,
   onChange,
+  renderLabel,
+  fieldClassName,
 }: ISelect<T>) => {
   const { isOpen, floatingProps, referenceProps, selectOption, isActive } = useSelect({
     options,
@@ -19,7 +23,7 @@ export const Select = <T extends string>({
 
   return (
     <div className="relative">
-      <TextField {...referenceProps} />
+      <TextField containerClassName={fieldClassName} appendIcon={<AiFillCaretDown />} {...referenceProps} />
 
       <SelectOptionList
         options={options}
@@ -27,6 +31,7 @@ export const Select = <T extends string>({
         floatingProps={floatingProps}
         selectOption={selectOption}
         isActive={isActive}
+        renderLabel={renderLabel}
       />
     </div>
   );

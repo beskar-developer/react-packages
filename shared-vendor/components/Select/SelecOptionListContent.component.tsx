@@ -4,7 +4,7 @@ type SelectOptionListContent<T extends string> = Pick<
   ReturnType<typeof useSelect<T>>,
   "isActive" | "selectOption"
 > &
-  Pick<ISelect<T>, "options">;
+  Pick<ISelect<T>, "options" | "renderLabel">;
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, scale: 0.95, y: -5 },
@@ -17,6 +17,7 @@ export const SelectOptionListContent = <T extends string>({
   options = [],
   isActive,
   selectOption,
+  renderLabel,
 }: SelectOptionListContent<T>) => {
   return (
     <motion.ul
@@ -25,7 +26,12 @@ export const SelectOptionListContent = <T extends string>({
     >
       {options.map((option) => (
         <motion.li key={option.value}>
-          <SelectOption option={option} active={isActive(option)} onSelect={selectOption} />
+          <SelectOption
+            option={option}
+            active={isActive(option)}
+            renderLabel={renderLabel}
+            onSelect={selectOption}
+          />
         </motion.li>
       ))}
     </motion.ul>

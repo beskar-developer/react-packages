@@ -7,4 +7,6 @@ export interface ISelect<T extends string> {
   label?: string;
   disabled?: boolean;
   onChange: (value: T) => void;
+  renderLabel?: (option: Option<T>) => ReactNode;
+  fieldClassName?: string;
 }
