@@ -14,7 +14,10 @@ export const createSetSearchParam =
   <T>(setSearchParams: SetURLSearchParams, key: string) =>
   (value: T) =>
     setSearchParams((params) => {
-      params.set(key, String(value));
+      const stringValue = String(value);
+
+      if (stringValue) params.set(key, stringValue);
+      else params.delete(key);
 
       return params;
     });
