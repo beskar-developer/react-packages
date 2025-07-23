@@ -1,19 +1,20 @@
-interface IDefaultDateField {
-  name: string;
+import type { InputProps } from "@shared-vendor/components/Input/TextField.type";
+
+interface IDefaultDateField extends InputProps {
   label?: string;
   fieldClassName?: string;
 }
 
 interface ISingleDateField extends IDefaultDateField {
   range?: false | undefined;
-  value: string;
-  onChange: (value: string) => void;
+  date: string;
+  onDateChange: (value: string) => void;
 }
 
 interface IRangeDateField extends IDefaultDateField {
   range: true;
-  value: string[];
-  onChange: (value: string[]) => void;
+  date: string[];
+  onDateChange: (value: string[]) => void;
 }
 
 export type IDateField = ISingleDateField | IRangeDateField;

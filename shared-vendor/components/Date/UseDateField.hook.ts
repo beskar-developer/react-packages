@@ -4,46 +4,47 @@ import DateObject from "react-date-object";
 import persian from "react-date-object/calendars/persian";
 import persianFa from "react-date-object/locales/persian_fa";
 
-export const useDateField = ({ range, value, name, label, fieldClassName, onChange }: IDateField) => {
+export const useDateField = ({ range, date, fieldClassName, onDateChange, ...props }: IDateField) => {
+  const convertISOToDate = (ISODate: string) => ISODate.slice(0, 10);
+
   const convertDateObjectToString = (dateObject: DateObject) =>
-    dateObject.toDate().toISOString().slice(0, 10);
+    convertISOToDate(dateObject.add(+!range, "day").toDate().toISOString());
 
-  const wrappedOnChange = (value: DateObject | DateObject[]) => {
+  const wrappedOnDateChange = (date: DateObject | DateObject[]) => {
     if (range) {
-      const normalizedValue = (value as DateObject[]).map(convertDateObjectToString);
+      const normalizedDate = (date as DateObject[]).map(convertDateObjectToString);
 
-      onChange(normalizedValue);
+      onDateChange(normalizedDate);
 
       return;
     }
 
-    const normalizedValue = convertDateObjectToString(value as DateObject);
-    onChange(normalizedValue);
+    const normalizedDate = convertDateObjectToString(date as DateObject);
+    onDateChange(normalizedDate);
   };
 
-  const convertStringToDateObject = (value: string) => (value ? new DateObject(value) : "");
+  const convertStringToDateObject = (value: string) => (value ? new DateObject(convertISOToDate(value)) : "");
 
-  const normalizeValue = (value: IDateField["value"]) => {
+  const normalizeDate = (date: IDateField["date"]) => {
     if (range) {
-      return (value as string[]).map(convertStringToDateObject);
+      return (date as string[]).map(convertStringToDateObject);
     }
 
-    return convertStringToDateObject(value as string);
+    return convertStringToDateObject(date as string);
   };
 
   const datePickerProps = {
     range,
-    value: normalizeValue(value),
+    value: normalizeDate(date),
     calendar: persian,
     locale: persianFa,
-    onChange: wrappedOnChange,
+    onChange: wrappedOnDateChange,
   };
 
   const fieldProps = {
     readOnly: true,
     containerClassName: fieldClassName,
-    name,
-    label,
+    ...props,
   };
 
   return { datePickerProps, fieldProps };
