@@ -8,6 +8,8 @@
     "axios": "^1.6.8",
     "crypto-js": "^4.2.0",
     "js-cookie": "^3.0.5",
+    "react-date-object": "^2.1.9",
+    "react-multi-date-picker": "^4.5.2",
     "uuid": "^10.0.0"
   },
   "devDependencies": {

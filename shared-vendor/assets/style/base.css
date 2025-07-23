@@ -61,4 +61,54 @@
   body * {
     @apply transition-colors duration-500;
   }
+
+  /* for calendar reset */
+  .rmdp-calendar {
+    @apply dark:bg-surface-700 rounded-md dark:text-white;
+  }
+
+  .rmdp-month-picker,
+  .rmdp-year-picker {
+    @apply dark:!bg-surface-700;
+  }
+
+  .rmdp-header-values,
+  .rmdp-day {
+    @apply dark:!text-white;
+  }
+
+  .rmdp-week-day {
+    @apply dark:!text-indigo-50;
+  }
+
+  .rmdp-shadow,
+  .rmdp-ep-shadow:after {
+    @apply !shadow-md;
+    @apply dark:!bg-surface-700;
+  }
+
+  .rmdp-ep-arrow {
+    @apply !border-0;
+  }
+
+  .dark .rmdp-ep-arrow:after {
+    background-color: var(--color-gray-700) !important;
+  }
+
+  .rmdp-week-day {
+    @apply !text-primary-500;
+  }
+
+  .rmdp-day:not(.rmdp-today, .rmdp-selected) span:hover {
+    @apply !bg-primary-100 !text-primary-500;
+  }
+
+  .rmdp-day.rmdp-today span {
+    @apply !bg-primary-300;
+  }
+
+  .rmdp-range,
+  .rmdp-day.rmdp-selected span:not(.highlight) {
+    @apply !bg-primary-500 !text-white;
+  }
 }
