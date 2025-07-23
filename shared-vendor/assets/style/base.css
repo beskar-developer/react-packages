@@ -111,4 +111,8 @@
   .rmdp-day.rmdp-selected span:not(.highlight) {
     @apply !bg-primary-500 !text-white;
   }
+
+  .recharts-surface {
+    @apply !overflow-visible;
+  }
 }
